@@ -12,7 +12,7 @@ const cors=require("cors")
 app.use(cors())
 app.use(express.json())
 app.use("/auth",authRouter)
-app.use("/items",authMiddleware,adminRouter)
+app.use("/admin",authMiddleware,adminRouter)
 app.listen(process.env.PORT,()=>{
     console.log(`Server running at http://localhost:${process.env.PORT}`)
 })

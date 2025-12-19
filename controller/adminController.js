@@ -1,18 +1,36 @@
 const Item=require("../models/items")
 const addItem=async (req,res)=>{
-    const newItem={
-        name:req.body.name,
-        price:req.body.price,
-        image:req.body.image,
-        category:req.body.category,
-        availability:req.body.availability
-    }
-    const item = await Item.create(newItem);
+    try {
+        const newItem={
+            name:req.body.name,
+            price:req.body.price,
+            image:req.body.image,
+            category:req.body.category,
+            availability:req.body.availability
+        }
+        const item = await Item.create(newItem);
         res.status(201).json({
             success: "Item Added",
             item: item
-    });
+        });
+    } catch (err) {
+        res.status(500).json({
+            error: "Failed to add item",
+            details: err.message
+        });
+    }
 }
+const getItem = async (req, res) => {
+    try {
+        const item = await Item.findById(req.params.id);
+        if (!item) {
+            return res.status(404).json({ error: "Item not found" });
+        }
+        res.status(200).json(item);
+    } catch (err) {
+        res.status(500).json({ error: "Failed to fetch item", details: err.message });
+    }
+};
 const updateItem = async (req, res) => {
     try {
         const { id } = req.params;
@@ -48,4 +66,4 @@ const deleteItem=async (req,res)=>{
     }
 }
 
-module.exports={addItem, updateItem, deleteItem}
+module.exports={addItem, getItem, updateItem, deleteItem}
