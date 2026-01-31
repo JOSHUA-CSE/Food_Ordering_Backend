@@ -8,6 +8,13 @@ const getCart = async (req, res) => {
   if (!cart) {
     return res.status(200).json({ message: "Cart not found", cart: [] });
   }
+
+  // Remove any cart items whose referenced item no longer exists
+  const validItems = cart.items.filter((ci) => ci.item);
+  if (validItems.length !== cart.items.length) {
+    cart.items = validItems;
+    await cart.save();
+  }
   
   res.status(200).json({ cart });
 };

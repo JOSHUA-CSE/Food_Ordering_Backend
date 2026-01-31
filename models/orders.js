@@ -20,6 +20,28 @@ const orderSchema=new mongoose.Schema(
         totalAmount:{
             type:Number,
             required:true
+        },
+        paymentMethod: {
+            type: String,
+            enum: ["COD", "ONLINE"],
+            default: "COD",
+            required: true
+        },
+        paymentStatus: {
+            type: String,
+            enum: ["PENDING", "PAID", "FAILED"],
+            default: "PENDING",
+            required: true
+        },
+        paymentId: {
+            type: String,
+            default: null
+        },
+        orderStatus: {
+            type: String,
+            enum: ["PLACED", "CONFIRMED", "PREPARING", "DELIVERED"],
+            default: "PLACED",
+            required: true
         }
     },
     {timestamps:true}
