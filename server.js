@@ -8,6 +8,7 @@ const adminRouter=require("./routes/admin")
 const authMiddleware=require("./middlewares/authMiddleware")
 const itemRouter=require("./routes/item")
 const cartRouter=require("./routes/cart")
+const orderRouter=require("./routes/order")
 
 const cors=require("cors")
 app.use(cors())
@@ -15,7 +16,7 @@ app.use(express.json())
 app.use("/auth",authRouter)
 app.use("/admin",authMiddleware,adminRouter)
 app.use("/cart",authMiddleware,cartRouter)
-
+app.use("/orders",authMiddleware,orderRouter)
 app.use("/items",itemRouter)
 
 app.listen(process.env.PORT,()=>{
